@@ -5,6 +5,8 @@ using LibraryOperation.Application.Dtos.Borrower;
 using LibraryOperation.Application.Dtos.Loan;
 using LibraryOperation.Application.Dtos.User;
 using LibraryOperation.Domain.Entities;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace LibraryOperation.Application.Mapper;
 

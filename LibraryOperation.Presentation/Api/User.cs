@@ -30,6 +30,7 @@ public class User : ICarterModule
     }
     public async Task<IResult> UpdateProfile(int id, UpdateProfileDto model, IUserService userService)
     {
+
         bool result = await userService.UpdateProfileAsync(id, model);
         return Results.Ok(result);
     }

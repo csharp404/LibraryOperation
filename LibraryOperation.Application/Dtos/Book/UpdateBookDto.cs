@@ -2,7 +2,9 @@
 
 public class UpdateBookDto
 {
-    public string? Title { set; get; }
-    public string? ISBN { set; get; }
-    public DateTime? PublishedDate { set; get; }
+
+    public string Title { set; get; }
+    public string ISBN { set; get; }
+    public DateTime PublishedDate { set; get; }
+    public int AuthorId { set; get; }
 }

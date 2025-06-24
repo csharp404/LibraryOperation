@@ -3,7 +3,7 @@ using LibraryOperation.Application.Dtos.Borrower;
 using LibraryOperation.Application.IRepository;
 using LibraryOperation.Application.IService;
 using LibraryOperation.Domain.Entities;
-
+using LibraryOperation.Infrastructure.Helper;
 using Microsoft.AspNetCore.Http;
 
 namespace LibraryOperation.Infrastructure.Services.BorrowerService;
@@ -34,6 +34,8 @@ public class BorrowerService (IRepository<Borrower> borrowerRepository, IMapper 
 
     public async Task<bool> UpdateBorrowerAsync(int id, UpdateBorrowerDto model)
     {
+        int userId = UserClaimsHelper.GetUserId(accessor);
+        model.UserId = userId;
         Borrower borrower = mapper.Map<Borrower>(model);
         bool result = await borrowerRepository.UpdateAsync(id, borrower);
         return result;

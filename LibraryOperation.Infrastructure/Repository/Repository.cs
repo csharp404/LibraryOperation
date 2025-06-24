@@ -59,15 +59,31 @@ namespace LibraryOperation.Infrastructure.Repository;
 
         public async Task<bool> UpdateAsync(object id, T model)
         {
-            var entity = await db.Set<T>().FindAsync(id);
-            if (entity == null)
-                return false;
+           
+                var existingEntity = await db.FindAsync<T>(id);
+                if (existingEntity == null) return false;
 
-            db.Entry(entity).CurrentValues.SetValues(model); // ✅ Copy properties safely
+                var entry = db.Entry(existingEntity);
+                var key = entry.Metadata.FindPrimaryKey();
 
-            await db.SaveChangesAsync();
-            return true;
+                
+                foreach (var property in entry.Metadata.GetProperties())
+                {
+                    if (key.Properties.Any(k => k.Name == property.Name))
+                        continue; 
+
+                    var newValue = db.Entry(model).Property(property.Name).CurrentValue;
+                    entry.Property(property.Name).CurrentValue = newValue;
+                }
+
+                await db.SaveChangesAsync();
+                return true;
+            
+
         }
+
+
+
 
 
     public async Task<bool> DeleteByIdAsync(int id)
