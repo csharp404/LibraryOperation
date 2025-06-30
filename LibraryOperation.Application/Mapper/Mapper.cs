@@ -15,19 +15,19 @@ public class Mapper : Profile
     public Mapper()
     {
         CreateMap<CreateProfileDto, User>().ReverseMap();
-        CreateMap<UpdateProfileDto, User>().ReverseMap();
+        CreateMap<UpdateProfileDto, User>().ForMember(x => x.Id, x => x.Ignore()).ReverseMap();
 
         CreateMap<CreateAuthorDto, Author>().ReverseMap();
-        CreateMap<UpdateAuthorDto, Author>().ReverseMap();
+        CreateMap<UpdateAuthorDto, Author>().ForMember(x => x.Id, x => x.Ignore()).ReverseMap();
 
         CreateMap<CreateLoanDto, Loan>().ReverseMap();
-        CreateMap<UpdateLoanDto, Loan>().ReverseMap();
+        CreateMap<UpdateLoanDto, Loan>().ForMember(x => x.Id, x => x.Ignore()).ReverseMap();
 
         CreateMap<CreateBookDto, Book>().ReverseMap();
-        CreateMap<UpdateBookDto, Book>().ReverseMap();
+        CreateMap<UpdateBookDto, Book>().ForMember(x => x.Id, x => x.Ignore()).ReverseMap();
 
         CreateMap<CreateBorrowerDto, Borrower>().ReverseMap();
-        CreateMap<UpdateBorrowerDto, Borrower>().ReverseMap();
+        CreateMap<UpdateBorrowerDto, Borrower>().ForMember(x => x.Id, x => x.Ignore()).ReverseMap();
 
     }
 }

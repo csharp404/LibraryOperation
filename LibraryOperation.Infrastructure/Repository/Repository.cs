@@ -63,19 +63,7 @@ namespace LibraryOperation.Infrastructure.Repository;
                 var existingEntity = await db.FindAsync<T>(id);
                 if (existingEntity == null) return false;
 
-                var entry = db.Entry(existingEntity);
-                var key = entry.Metadata.FindPrimaryKey();
-
-                
-                foreach (var property in entry.Metadata.GetProperties())
-                {
-                    if (key.Properties.Any(k => k.Name == property.Name))
-                        continue; 
-
-                    var newValue = db.Entry(model).Property(property.Name).CurrentValue;
-                    entry.Property(property.Name).CurrentValue = newValue;
-                }
-
+                db.Update(model);
                 await db.SaveChangesAsync();
                 return true;
             
