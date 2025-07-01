@@ -2,9 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Expressions;
+using AutoMapper;
 using LibraryOperation.Application.IRepository;
 namespace LibraryOperation.Infrastructure.Repository;
-    public class Repository<T>(MyDbContext db) : IRepository<T>
+    public class Repository<T>(MyDbContext db,IMapper mapper) : IRepository<T>
         where T : class
     {
         public async Task<List<T>> GetAllAsync(Expression<Func<T, object>>? include = null)
@@ -63,7 +64,8 @@ namespace LibraryOperation.Infrastructure.Repository;
                 var existingEntity = await db.FindAsync<T>(id);
                 if (existingEntity == null) return false;
 
-                db.Update(model);
+                mapper.Map(model, existingEntity);
+                db.Update(existingEntity);
                 await db.SaveChangesAsync();
                 return true;
             
