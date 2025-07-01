@@ -32,7 +32,13 @@ public class BookService (IRepository<Book> bookRepository, IMapper mapper) : IB
 
     public async  Task<bool> UpdateBookAsync(int id, UpdateBookDto model)
     {
-        Book book = mapper.Map<Book>(model);
+        Book book = await bookRepository.GetByIdAsync(id);
+        if (book is null)
+        {
+            return false;
+        }
+
+        mapper.Map(model, book);
         bool result = await bookRepository.UpdateAsync(id, book);
         return result;
     }

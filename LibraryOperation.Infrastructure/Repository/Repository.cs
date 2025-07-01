@@ -60,12 +60,8 @@ namespace LibraryOperation.Infrastructure.Repository;
 
         public async Task<bool> UpdateAsync(object id, T model)
         {
-           
-                var existingEntity = await db.FindAsync<T>(id);
-                if (existingEntity == null) return false;
-
-                mapper.Map(model, existingEntity);
-                db.Update(existingEntity);
+            
+                db.Update(model);
                 await db.SaveChangesAsync();
                 return true;
             

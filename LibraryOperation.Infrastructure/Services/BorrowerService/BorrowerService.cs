@@ -34,11 +34,20 @@ public class BorrowerService (IRepository<Borrower> borrowerRepository, IMapper 
 
     public async Task<bool> UpdateBorrowerAsync(int id, UpdateBorrowerDto model)
     {
+        Borrower borrower = await borrowerRepository.GetByIdAsync(id);
+
+        if (borrower is null)
+        {
+            return false;
+        }
         int userId = UserClaimsHelper.GetUserId(accessor);
         model.UserId = userId;
-        Borrower borrower = mapper.Map<Borrower>(model);
+       
+
+        mapper.Map(model, borrower);
         bool result = await borrowerRepository.UpdateAsync(id, borrower);
         return result;
+        
     }
 
     public async Task<bool> CreateBorrowerAsync(CreateBorrowerDto model)

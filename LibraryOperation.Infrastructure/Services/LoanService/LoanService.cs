@@ -20,7 +20,14 @@ public class LoanService(IRepository<Loan> loanRepository, IMapper mapper): ILoa
 
     public async Task<bool> UpdateLoanAsync(int id, UpdateLoanDto model)
     {
-        Loan loan = mapper.Map<Loan>(model);
+
+        Loan loan= await loanRepository.GetByIdAsync(id);
+        if (loan is null)
+        {
+            return false;
+        }
+
+        mapper.Map(model, loan);
         bool result = await loanRepository.UpdateAsync(id, loan);
         return result;
     }

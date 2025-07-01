@@ -33,7 +33,13 @@ public class AuthorService (IRepository<Author> authorRepository, IMapper mapper
 
     public async Task<bool> UpdateAuthorAsync(int id, UpdateAuthorDto model)
     {
-        Author author = mapper.Map<Author>(model);
+        Author author = await authorRepository.GetByIdAsync(id);
+        if (author is null)
+        {
+            return false;
+        }
+
+        mapper.Map(model, author);
         bool result = await authorRepository.UpdateAsync(id, author);
         return result;
     }
