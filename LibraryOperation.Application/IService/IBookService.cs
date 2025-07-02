@@ -5,7 +5,7 @@ namespace LibraryOperation.Application.IService;
 
 public interface IBookService
 {
-    Task<List<Book?>> GetBooksAsync();
+    Task<List<Book>> GetBooksAsync();
     Task<Book> GetBookAsync(int id);
     Task<bool> DeleteBookAsync(int id);
 

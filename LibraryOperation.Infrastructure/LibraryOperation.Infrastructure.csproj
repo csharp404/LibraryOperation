@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Constants\" />
     <Folder Include="Repository\" />
     <Folder Include="Services\BookService\" />
     <Folder Include="Services\AuthorService\" />

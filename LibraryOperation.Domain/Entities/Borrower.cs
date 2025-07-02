@@ -1,9 +1,8 @@
 ﻿namespace LibraryOperation.Domain.Entities
 {
-    public class Borrower
+    public class Borrower :BaseEntity
     {
-        public int Id { set; get; }
-        public string Name { set; get; }
+
         public string Email { set; get; }
         public string Phone { set; get; }
 

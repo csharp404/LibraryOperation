@@ -8,9 +8,9 @@ namespace LibraryOperation.Infrastructure.Repository;
     public class Repository<T>(MyDbContext db,IMapper mapper) : IRepository<T>
         where T : class
     {
-        public async Task<List<T>> GetAllAsync(Expression<Func<T, object>>? include = null)
+        public async Task<List<T?>> GetAllAsync(Expression<Func<T, object>>? include = null)
         {
-            IQueryable<T> entity = db.Set<T>();
+            IQueryable<T?> entity = db.Set<T>();
             if (include != null)
             {
                 entity = entity.Include(include);
@@ -22,9 +22,9 @@ namespace LibraryOperation.Infrastructure.Repository;
             return await db.Set<T>().FindAsync(id);
         }
 
-        public async Task<List<T>> GetPagedAsync(int pageNumber, int pageSize, Expression<Func<T, object>>? include)
+        public async Task<List<T?>> GetPagedAsync(int pageNumber, int pageSize, Expression<Func<T, object>>? include)
         {
-            IQueryable<T> entities = db.Set<T>();
+            IQueryable<T?> entities = db.Set<T>();
             if (include != null)
             {
                 entities.Include(include);
@@ -42,9 +42,9 @@ namespace LibraryOperation.Infrastructure.Repository;
             return true;
         }
 
-        public async Task<List<T>> FindByConditionAsync(Expression<Func<T, bool>>? predicate, Expression<Func<T, object>>? includes)
+        public async Task<List<T?>> FindByConditionAsync(Expression<Func<T, bool>>? predicate, Expression<Func<T, object>>? includes)
         {
-            IQueryable<T> entity = db.Set<T>();
+            IQueryable<T?> entity = db.Set<T>();
             if (predicate != null)
             {
                 entity = entity.Where(predicate);
@@ -56,6 +56,12 @@ namespace LibraryOperation.Infrastructure.Repository;
             }
 
             return await entity.ToListAsync();
+        }
+
+        public async Task<T?> FindByEmailAsync(Expression<Func<T, bool>> predicate)
+        {
+        T? entity = await db.Set<T>().Where(predicate).FirstOrDefaultAsync();
+        return  entity;
         }
 
         public async Task<bool> UpdateAsync(object id, T model)

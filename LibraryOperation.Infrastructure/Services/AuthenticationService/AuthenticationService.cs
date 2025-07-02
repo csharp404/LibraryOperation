@@ -1,14 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
-using LibraryOperation.Application.Dtos.Authentication;
+﻿using LibraryOperation.Application.Dtos.Authentication;
+using LibraryOperation.Application.Exception;
 using LibraryOperation.Application.IService;
 using LibraryOperation.Domain.Entities;
 using LibraryOperation.Infrastructure.Data;
 using LibraryOperation.Infrastructure.Helper;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.Data;
-using Microsoft.AspNetCore.Mvc;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+
+using LibraryOperation.Infrastructure.Constants;
 
 namespace LibraryOperation.Infrastructure.Services.AuthenticationService;
 
@@ -30,8 +31,8 @@ public class AuthenticationService(MyDbContext db, IConfiguration configuration,
             }
         }
 
-        throw new ValidationException("you have error in your credentials");
-    
+        throw new ApiException(ErrorMessages.Credential.Title, 401, ErrorMessages.Credential.Detail);
+
     }
 
 

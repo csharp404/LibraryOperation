@@ -3,11 +3,14 @@ using Carter;
 using LibraryOperation.Application.Dtos.Borrower;
 using LibraryOperation.Application.Dtos.User;
 using LibraryOperation.Application.IService;
+using LibraryOperation.Domain.Entities;
 using LibraryOperation.Infrastructure.Services.BorrowerService;
+using LibraryOperation.Presentation.Constants;
+using LibraryOperation.Presentation.Model;
 
 namespace LibraryOperation.Presentation.Api
 {
-    public class Borrower : ICarterModule
+    public class BorrowerApi : ICarterModule
     {
 
 
@@ -26,29 +29,34 @@ namespace LibraryOperation.Presentation.Api
         public async Task<IResult> DeleteBorrower(int id, IBorrowerService borrowerService)
         {
             var result = await borrowerService.DeleteBorrowerAsync(id);
-            return Results.Ok(result);
+            return Results.Ok(new ApiResponse<User>(true, data: null,
+                string.Format(ApiMessages.Template.Retrieved, ApiMessages.Entities.Borrower)));
         }
         public async Task<IResult> UpdateBorrower(int id, UpdateBorrowerDto model, IBorrowerService borrowerService)
         {
             var result = await borrowerService.UpdateBorrowerAsync(id, model);
-            return Results.Ok(result);
+            return Results.Ok(new ApiResponse<User>(true, data: null,
+                string.Format(ApiMessages.Template.Retrieved, ApiMessages.Entities.Borrower)));
         }
         public async Task<IResult> GetAllBorrowers(IBorrowerService borrowerService)
         {
-            var result = await borrowerService.GetBorrowersAsync();
-            return Results.Ok(result);
+            List<Borrower> result = await borrowerService.GetBorrowersAsync();
+            return Results.Ok(new ApiResponse<List<Borrower>>(true, data: result,
+                string.Format(ApiMessages.Template.Retrieved, ApiMessages.Entities.Borrower)));
         }
 
         public async Task<IResult> GetBorrowerById(int id, IBorrowerService borrowerService)
         {
             var result = await borrowerService.GetBorrowerAsync(id);
-            return Results.Ok(result);
+            return Results.Ok(new ApiResponse<Borrower>(true, data: result,
+                string.Format(ApiMessages.Template.Retrieved, ApiMessages.Entities.Borrower)));
         }
         public async Task<IResult> AddNewBorrower(CreateBorrowerDto model, IBorrowerService borrowerService)
         {
 
             var result = await borrowerService.CreateBorrowerAsync(model);
-            return Results.Ok(result);
+            return Results.Ok(new ApiResponse<Borrower>(true, data: null,
+                string.Format(ApiMessages.Template.Retrieved, ApiMessages.Entities.Borrower)));
         }
 
 

@@ -6,7 +6,7 @@ namespace LibraryOperation.Application.IService;
 
 public interface IBorrowerService
 {
-    Task<List<Borrower?>> GetBorrowersAsync();
+    Task<List<Borrower>> GetBorrowersAsync();
     Task<Borrower> GetBorrowerAsync(int id);
     Task<bool> DeleteBorrowerAsync(int id);
 

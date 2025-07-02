@@ -2,10 +2,9 @@
 
 namespace LibraryOperation.Domain.Entities
 {
-    public class Book
+    public class Book : BaseEntity
     {
-        public int Id { set; get; }
-        public string Title { set; get; }
+
         public string ISBN { set; get; }
         public DateTime PublishedDate { set; get; }
         public virtual Author? Author { set; get; }

@@ -1,5 +1,7 @@
+using Carter;
 using LibraryOperation.Application.IRepository;
 using LibraryOperation.Application.IService;
+using LibraryOperation.Application.Mapper;
 using LibraryOperation.Domain.Entities;
 using LibraryOperation.Infrastructure.Data;
 using LibraryOperation.Infrastructure.Repository;
@@ -9,14 +11,12 @@ using LibraryOperation.Infrastructure.Services.BookService;
 using LibraryOperation.Infrastructure.Services.BorrowerService;
 using LibraryOperation.Infrastructure.Services.LoanService;
 using LibraryOperation.Infrastructure.Services.UserService;
+using LibraryOperation.Presentation.Exception_MiddleWare;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Carter;
-
-using LibraryOperation.Application.Mapper;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAutoMapper(typeof(Mapper).Assembly);
@@ -82,5 +82,7 @@ app.UseAuthorization();
 //    string token = await service.Login(model);
 //    return Results.Ok(token);
 //});
+app.UseMiddleware<CustomExceptionHandlingMiddleware>();
+
 app.MapCarter();
 app.Run();
